@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, flash, url_for
 from werkzeug.utils import secure_filename
+from processimage import predict
 import os
+import cv2
+
 app = Flask(__name__)
 
 
@@ -15,10 +18,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-def processImage(filename):
-    print(f"filename is {filename}")
-    return filename
 
 @app.route("/")
 def home():
@@ -39,8 +38,12 @@ def detect():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            processImage(filename)
-            flash(f"Find the processed image <a href = '/static/{filename}'>here</a>")
+            new = predict(filename)
+            # new2 = predict2(filename)
+
+            flash(f"Find the processed image <a href = '{new}' target= '_blank'>here</a>")
+
+            # flash(f"Find the processed image <a href = '{new2}' target= '_blank'>here</a>")
             return render_template("index.html")
     return render_template("index.html")
 
