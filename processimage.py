@@ -107,7 +107,7 @@ def predict(iimage):
 
                 cv2.rectangle(img, (int(a), int(b)),
                               (int(c), int(d)), (0, 0, 255), thickness=4)
-                cv2.putText(img, "pasted", (int(a), int(b) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
+                cv2.putText(img, "discrepency", (int(a), int(b) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
 
 
     newfilename = f"static/{iimage}"
